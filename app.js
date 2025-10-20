@@ -1,7 +1,11 @@
 const express = require('express');
 const path = require('path');
 const { logger } = require('./middleware/logger');
-const GUN = require('gun')
+const dotenv = require('dotenv');
+const GUN = require('gun');
+const mongoose = require('mongoose');
+
+dotenv.config();
 
 const app = express();
 const port = 3000;

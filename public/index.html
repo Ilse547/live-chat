@@ -1,27 +1,44 @@
 <html>
     <head>
-        <title>Chat</title>
+        <title>Thatdown</title>
         <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
-
         <link rel="stylesheet" href="./style/style.css">
+        <link rel="icon" href="img/whatb.png" type="image/x-icon">
     </head>
     <body>
-
-        <nav class = "sidebar">
-            <a class = "active"> Chat1</a>
-            <a class = "active"> Chat2</a>
-            <a class = "active"> Chat3</a>
-            <a class = "active"> Chat4</a>
-
+        <nav class="sidebar">
+            <div class="username-section">
+                <h3>Your Name</h3>
+                <div class="username-input-group">
+                    <input type="text" id="username-input" placeholder="Enter your name" maxlength="20">
+                    <button id="set-username-btn">Set</button>
+                </div>
+                <div id="current-user" class="current-user hidden">
+                    <span>👤</span>
+                    <span id="current-username">Anonymous</span>
+                    <button id="edit-username-btn">Edit</button>
+                </div>
+            </div>
+            <hr class="nav-divider">
+            <a>Orlando</a>
+            <a>Maximilian pupsmaius</a>
+            <a>maximilian</a>
+            <a>Chat</a>
         </nav>
-        <main class="chat">
-            <h1>Chat</h1>
-        <div id="messages"></div>
-        <input type="text" id="message-input" placeholder="Type a message...">
-        <button id="send-btn">Send</button>
 
+        
+        <div class="chat-container">
+            <main class="chat">
+                <h1>H1 chat ?</h1>
+                <div id="messages"></div>
+            </main>
+            
+            <div class="inputbar">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-btn">Send</button> 
+            </div>
+        </div>
 
-        </main>
         <script src="./js/chat.js"></script>
     </body>
 </html>

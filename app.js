@@ -4,11 +4,21 @@ const { logger } = require('./middleware/logger');
 const dotenv = require('dotenv');
 const GUN = require('gun');
 const mongoose = require('mongoose');
+const {User} = require('./models/user.js');
 
 dotenv.config();
 
+mongoose.connect(process.env.MONGODB_URL)
+    .then(() =>{
+        console.log("connected to mongo atlas");
+    })
+    .catch((error) => {
+        console.error("mongodb atlas connection error:", error);
+        process.exit(1);
+    });
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 app.use(logger);
 app.use(express.static(path.join(__dirname, 'public')));

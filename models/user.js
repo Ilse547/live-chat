@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const Userschema = new mongoose.Schema({
-    username: {type:String, unique:true, required:true},
-    uuid: {type:String, unique:true, required:true},
-    phone: {type:String, unique:true},
-    password: {type:String, required:true}
+    username: {type:String, unique:true, required:true,minlength:3,maxlength:12},
+    password: {type:String, required:true, minlength:6}
 });
 Userschema.pre('save', async function(next) {
     if(!this.isModified('password')) return next;

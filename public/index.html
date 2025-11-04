@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <head>
         <title>Thatdown</title>
@@ -6,99 +8,25 @@
         <link rel="icon" href="img/whatb.png" type="image/x-icon">
     </head>
     <body>
-        <script>
-            // Add this at the very beginning of your chat page
-async function checkAuthentication() {
-    try {
-        const response = await fetch('/api/me');
-        const data = await response.json();
-        
-        if (!data.authenticated) {
-            // User is not logged in - redirect to login
-            window.location.href = '/login.html';
-            return null;
-        }
-        
-        // User is logged in - return their info
-        return data;
-    } catch (error) {
-        console.error('Auth check failed:', error);
-        window.location.href = '/login.html';
-        return null;
-    }
-}
-
-// Run this when page loads
-document.addEventListener('DOMContentLoaded', async () => {
-    const user = await checkAuthentication();
-    if (!user) {
-        return; // Will redirect to login
-    }
-    
-    // User is authenticated - initialize chat with their username
-    console.log('User logged in:', user.username);
-    // Hide username input and show their account info
-    showUserAccount(user.username);
-});
-
-function showUserAccount(username) {
-    // Find and hide the username input
-    const usernameInput = document.getElementById('username'); // or your username input ID
-    const usernameContainer = usernameInput?.parentElement;
-    
-    if (usernameContainer) {
-        usernameContainer.style.display = 'none';
-    }
-    
-    // Show logged-in user info instead
-    const userInfoDiv = document.createElement('div');
-    userInfoDiv.innerHTML = `
-        <div style="padding: 10px; background: #f0f0f0; margin-bottom: 10px;">
-            <strong>Logged in as: ${username}</strong>
-            <button onclick="logout()" style="margin-left: 10px; padding: 5px 10px;">Logout</button>
-        </div>
-    `;
-    
-    // Insert at the top of your chat container
-    const chatContainer = document.body; // or your specific chat container
-    chatContainer.insertBefore(userInfoDiv, chatContainer.firstChild);
-}
-
-async function logout() {
-    try {
-        await fetch('/logout', { method: 'POST' });
-        window.location.href = '/login.html';
-    } catch (error) {
-        console.error('Logout failed:', error);
-        window.location.href = '/login.html';
-    }
-}
-
-        </script>
         <nav class="sidebar">
             <div class="username-section">
-                <h3>Your Name</h3>
-                <div class="username-input-group">
-                    <input type="text" id="username-input" placeholder="Enter your name" maxlength="20">
-                    <button id="set-username-btn">Set</button>
-                </div>
-                <div id="current-user" class="current-user hidden">
-                    <span>👤</span>
-                    <span id="current-username">Anonymous</span>
-                    <button id="edit-username-btn">Edit</button>
-                </div>
+                <h3>USER:</h3>
+            <div id="current-user" class="current-user hidden">
+                <span id="current-username">Loading...</span>
+                <button id="logout-btn">Logout</button>  
+            </div>
             </div>
             <hr class="nav-divider">
-            <a>Orlando</a>
-            <a>Maximilian pupsmaius</a>
-            <a>maximilian</a>
+            <a> 1</a>
+            <a>2</a>
+            <a>3</a>
             <a>Chat</a>
         </nav>
 
         
         <div class="chat-container">
             <main class="chat">
-                <h1>H1 chat ?</h1>
+                <h1>CHAT</h1>
                 <div id="messages"></div>
             </main>
             

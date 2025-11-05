@@ -1,17 +1,13 @@
 const gun = GUN([
-    'https://lich-z34n.onrender.com',
+    'https://lich-z34n.onrender.com/gun',
     'https://gun-manhattan.herokuapp.com/gun',
     'https://gun-us.herokuapp.com/gun']);
 const chat = gun.get('general-chat');
 let username = null;
 
-// DOM elements
-const usernameInput = document.getElementById('username-input');
-const setUsernameBtn = document.getElementById('set-username-btn');
 const currentUserDiv = document.getElementById('current-user');
 const currentUsernameSpan = document.getElementById('current-username');
 const logoutbtn = document.getElementById('logout-btn');
-
 
 async function checkauth() {
     try{

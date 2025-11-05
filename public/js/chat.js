@@ -1,5 +1,7 @@
-const gun = GUN(['http://192.168.178.21:3000/gun',
-    'https://lich-z34n.onrender.com']);
+const gun = GUN([
+    'https://lich-z34n.onrender.com',
+    'https://gun-manhattan.herokuapp.com/gun',
+    'https://gun-us.herokuapp.com/gun']);
 const chat = gun.get('general-chat');
 let username = null;
 

@@ -8,6 +8,33 @@ let username = null;
 const currentUserDiv = document.getElementById('current-user');
 const currentUsernameSpan = document.getElementById('current-username');
 const logoutbtn = document.getElementById('logout-btn');
+const cchat = document.getElementById('create-chat');
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    checkauth();
+    const delmsg=document.getElementById('dlt-msg');
+    delmsg.addEventListener('click', delallmsg);
+});
+async function delallmsg(){
+    try{
+        const response = await fetch('/api/me');
+        const data = await response.json();
+        if(!data.admin){alert('access denied you are not and admin :(');return;}
+        const condel = confirm('this will dekete all messages sure ?');
+        if(!condel) return;
+        console.log('admin del msg');
+        chat.get('messages').map().on((message, key)=>{
+            if(message && key){chat.get('messages').get(key).put(null);}
+        });
+        chat.get('messages').put(null);
+        const messageDiv = document.getElementById('messages');
+        messagesDiv.innerHTML='';
+        alert('messages were deleted');
+        console.log("messages deleted");
+
+    }catch(err){consol.error('errirr del messages:', err); alert("error del emssages");}
+}
+
 
 async function checkauth() {
     try{
@@ -20,9 +47,29 @@ async function checkauth() {
         username = data.username;
         currentUsernameSpan.textContent=username;
         document.getElementById('current-user').classList.remove('hidden');
+        if(data.admin){
+            showAdminElement();
+        }else{hideAdminElement();
+        }
+
+
         return data;
     }catch(err){console.error('auth check failed:',err);window.location.href='/login.html';return null;}
 };
+function showAdminElement(){
+    const adminElement = document.querySelectorAll('.adminonly');
+    adminElement.forEach(Element=>{
+        Element.classList.remove('hidden');
+    });
+}
+
+function hideAdminElement(){
+    const adminElement = document.querySelectorAll('.adminonly');
+    adminElement.forEach(Element=>{
+        Element.classList.add('hidden');
+    });
+}
+
 logoutbtn.addEventListener('click', async()=>{
     try{
         await fetch('/logout', {method:"POST"});
@@ -58,3 +105,9 @@ function displayMessage(message){
     messageDiv.scrollTop=messageDiv.scrollHeight;
 }
 document.addEventListener('DOMContentLoaded', checkauth);
+
+cchat.addEventListener('click', async()=>{
+    try {
+        window.location.href='/create.html';
+    }catch(err){console.error(err); resizeBy.status(404).json({message:"eroror"});}})
+

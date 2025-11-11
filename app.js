@@ -9,6 +9,7 @@ const session = require('express-session');
 const jwt = require('jsonwebtoken');
 const { requireauth } = require('./middleware/authentication');
 const bcrypt = require('bcrypt');
+const user = require('./models/user.js');
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 const app = express();
 const port = process.env.PORT;
-
+const JWT_KEY = process.env.JWT_KEY;
 app.use(logger);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
@@ -46,7 +47,7 @@ const gun = GUN({
     ]
 });
 
-const JWT_KEY = process.env.JWT_KEY;
+
 
 app.use(express.json());
 //register a new account
@@ -110,20 +111,32 @@ const verifyToken = (req, res,next)=>{
 app.get('/', requireauth, (req,res)=>{
     res.sendFile(path.join(__dirname,'public','index.html'));});
 
-app.get('/api/me', (req, res) => {
+app.get('/api/me',async (req, res) => {
     if (req.session.user && req.session.user.authenticated) {
-        res.json({
+
+        try{
+            const user = await User.findById(req.session.user.id)
+            res.json({
             authenticated: true,
             username: req.session.user.username,
-            id: req.session.user.id
+            id: req.session.user.id,
+            admin: user ? user.admin:false
         });
-    } else {
+
+    }catch(err){
+        console.error('error getting user:',err);
         res.json({
-            authenticated: false
-        });
-    }
+            authenticated:true,
+            username:req.session.user.username,
+            id:req.session.user.id,
+            admin:false
+        });}
+        }else {
+            res.json({authenticated: false}
+        );}
 });
     
+
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -132,6 +145,27 @@ app.post('/logout', (req, res) => {
         res.redirect('/login.html');
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 server.listen(port, ()=>{

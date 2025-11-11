@@ -2,18 +2,27 @@
 <html lang="en">
     <head>
         <title>Login</title>
+        <link rel="icon" href="img/whatb.png" type="image/x-icon">
+        <link rel="stylesheet" href="./style/style-nchat.css">
     </head>
     <body>
         <form action="/login" method="POST">
-            <label for="uname">Username:</label>
-            <input type="text" id="uname" name="uname" placeholder="username"> </br>
+            <div class form-r>
+                <label for="uname"></label>
+                <input type="text" id="uname" name="uname" placeholder="Username..."> </br>
+            </div>
+            <div class form-r>
+                <label for="pword"></label>
+                <input type="password" id="pword" name="pword" placeholder="Password..."> </br>
+            </div>
+            <button type="submit">Login</button>
+            <button type="button" id="regisredirect">Register page</button>
 
-            <label for="pword">Password:</label>
-            <input type="password" id="pword" name="pword" placeholder="password"> </br>
-            <button type="submit">Login</button> 
         </form>
-        <a href="register.html">reguister</a>
-
+        <script>
+            const regredirect = document.getElementById('regisredirect');
+            regredirect.addEventListener('click', await =>{window.location.href='/register.html'});
+        </script>
     </body>
 </html>
 

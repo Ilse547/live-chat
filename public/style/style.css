@@ -3,7 +3,23 @@ body {
     height:100vh;
     display:flex;
     font-family:Arial, Helvetica, sans-serif;}
-
+.hidden{display: none !important;}
+.admin-only{
+    background-color: #f0f0f0;
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px 0;
+}
+.sbtn{
+    width:100%;
+    padding:0.75rem 1.5rem;
+    border:none;
+    border-radius:0.5rem;
+    box-shadow: 2px 5px 10px #000 ;
+    background: #3b82f6;
+    color:white;
+    margin-top: 10px;
+}
 .sidebar{
     display:flex;
     flex-direction:column;
@@ -18,23 +34,6 @@ body {
     border:#1f2937;
     border-color:#3b82f6;}
 .nav-divider{width:200px;}
-#username_input{
-    background-color:#007bff;
-    color:white;
-    border:none;
-    border-radius:4px;
-    font-size:16px;
-    cursor:pointer;
-    margin-bottom:5px;}
-#set-UN-btn{
-    background-color:#007bff;
-    color:white;
-    border: none;
-    border-radius:4px;
-    font-size:16px;
-    cursor:pointer;
-    margin-bottom:5px;
-    size:15px;}
 .chat-container{
     flex:1;
     display:flex;

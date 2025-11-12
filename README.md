@@ -41,7 +41,7 @@ Password: ```123456```
 
 ### Database:
 For the User data: MongoDB Atlas  
-For Group metadata: MongoDB Atlas
+For Group metadata: MongoDB Atlas  
 For the messages: GUN  
 
 ### Frontend:

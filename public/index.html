@@ -2,6 +2,7 @@
 
 <html>
     <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Thatdown</title>
         <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
         <link rel="stylesheet" href="./style/style.css">
@@ -28,9 +29,12 @@
         
         <div class="chat-container">
             <main class="chat">
-                <button class="sb-btn sbtn" id="sb-btn">sidebar</button>
-                <h1>CHAT</h1>
-                <div id="messages"></div>
+                <div class="header">
+                    <h1>CHAT</h1>
+                    <button class="sb-btn sbtn" id="sb-btn">sidebar</button>
+                    <div id="messages"></div>
+                </div>
+
             </main>
             
             <div class="inputbar">

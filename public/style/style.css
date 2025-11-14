@@ -83,3 +83,21 @@ body {
     box-shadow:0 1px 3px rgba(0,0,0,0.1);}
 .message strong{color:#1f2937;}
 .message small{color:#6b7280;margin-left:0.5rem;}
+.sidebar{transition:width 0.3s,min-width 0.3s,max-width 0.3s,padding 0.3s;}
+
+.sidebar.collapsed{
+    width:0;
+    max-width:0;
+    padding:0;
+    overflow:hidden;}
+.sidebar.collapsed >*{opacity:0;pointer-events:none;transition:opacity 0.2s;}
+@media screen and (max-width:662px) {
+    .sidebar-toggle{display:block;}
+    .sidebar{position:absolute;
+    top:0;
+    left:0;
+    height:100vh;
+    z-index:1000;}
+    .chat-container{margin-left:0 !important;}
+    .chat{background-color:#ff0000;}
+}

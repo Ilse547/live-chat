@@ -10,6 +10,11 @@ const currentUsernameSpan = document.getElementById('current-username');
 const logoutbtn = document.getElementById('logout-btn');
 const cchat = document.getElementById('create-chat');
 
+
+document.getElementById("sb-btn").addEventListener('click', function() {
+    document.querySelector('.sidebar').classList.toggle('collapsed');
+});
+
 document.addEventListener('DOMContentLoaded', ()=>{
     checkauth();
     const delmsg=document.getElementById('dlt-msg');

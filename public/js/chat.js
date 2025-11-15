@@ -22,33 +22,54 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 async function delallmsg(){
     try{
-        const response = await fetch('/api/me');
+        const token=localStorage.getItem('token');
+        const response=await fetch("/api/me",{
+            headers:{
+                'Authorization':'Bearer '+token
+            }
+        });
         const data = await response.json();
         if(!data.admin){alert('access denied you are not and admin :(');return;}
-        const condel = confirm('this will dekete all messages sure ?');
+        const condel = confirm('this will delete all msgs, are you sure ?');
         if(!condel) return;
         console.log('admin del msg');
         chat.get('messages').map().on((message, key)=>{
             if(message && key){chat.get('messages').get(key).put(null);}
         });
         chat.get('messages').put(null);
-        const messageDiv = document.getElementById('messages');
+        const messagesDiv = document.getElementById('messages');
         messagesDiv.innerHTML='';
         alert('messages were deleted');
         console.log("messages deleted");
 
-    }catch(err){consol.error('errirr del messages:', err); alert("error del emssages");}
+    }catch(err){console.error('errirr del messages:', err); alert("error del emssages");}
 }
-
-
+logoutbtn.addEventListener("click",()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('userId');
+    window.location.href="/login.html";
+});
 async function checkauth() {
+    console.log("running checkauth");
     try{
-        const response = await fetch('/api/me');
-        const data = await response.json();
-        if(!data.authenticated){
+        const token=localStorage.getItem('token');
+        if(!token){
             window.location.href ='/login.html';
             return null;
         }
+        const response=await fetch("/api/me",{
+            headers:{
+                'Authorization':'Bearer '+token
+            }
+        });
+        const data=await response.json();
+        if(!data.authenticated){
+            window.location.href='/login.html';
+            return null;
+        }
+
         username = data.username;
         currentUsernameSpan.textContent=username;
         document.getElementById('current-user').classList.remove('hidden');
@@ -75,11 +96,6 @@ function hideAdminElement(){
     });
 }
 
-logoutbtn.addEventListener('click', async()=>{
-    try{
-        await fetch('/logout', {method:"POST"});
-        window.location.href='/login.html';
-    }catch(err){console.error("logout failed:",err);window.location.href='/login.html'}});
 document.getElementById('send-btn').addEventListener("click",()=>{
     const input=document.getElementById('message-input');
     if(input.value.trim()&&username){
@@ -109,7 +125,6 @@ function displayMessage(message){
     messageDiv.appendChild(messagesEl);
     messageDiv.scrollTop=messageDiv.scrollHeight;
 }
-document.addEventListener('DOMContentLoaded', checkauth);
 
 cchat.addEventListener('click', async()=>{
     try {

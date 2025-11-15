@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="./style/style-nchat.css">
     </head>
     <body>
-        <form action="/login" method="POST">
+        <form id="login-form">
             <div class form-r>
                 <label for="uname"></label>
                 <input type="text" id="uname" name="uname" placeholder="Username..."> </br>
@@ -23,6 +23,7 @@
             const regredirect = document.getElementById('regisredirect');
             regredirect.addEventListener('click', await =>{window.location.href='/register.html'});
         </script>
+        <script src="js/login.js"></script>
     </body>
 </html>
 

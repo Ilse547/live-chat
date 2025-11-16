@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const { requireauth } = require('./middleware/authentication');
 const bcrypt = require('bcrypt');
 const user = require('./models/user.js');
+const Group = require('./models/group.js');
 
 dotenv.config();
 
@@ -109,6 +110,16 @@ app.get('/api/me',verifyToken,async (req, res) => {
         console.error('error getting user:',err);
         res.json({authenticated:false});
     }
+});
+app.post('/api/create-chat',verifyToken,async (req,res)=>{
+    try{
+        const {unames}=req.body;
+        const Gid="Group_"+Date.now();
+        const Gname=unames.join(', ');
+        const group=new Group({Gname,Gid,Gparticipants:unames});
+        await group.save();
+        res.json({success:true,group});
+    }catch(err){console.error('error creating chat: ',err);res.status(500).json({succhess:false,message:"error with server"});}
 });
 server.listen(port, ()=>{
     console.log(`http://localhost:${port}`);

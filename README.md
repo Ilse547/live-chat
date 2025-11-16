@@ -49,4 +49,5 @@ For the messages: GUN
 - CSS3  
 - Javascript  
 
-
+## Run the code:
+You can run the code with: ```node app.js```

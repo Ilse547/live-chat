@@ -130,4 +130,26 @@ cchat.addEventListener('click', async()=>{
     try {
         window.location.href='/create.html';
     }catch(err){console.error(err); resizeBy.status(404).json({message:"eroror"});}})
-
+async function loadusrgrps(){
+    const token=localStorage.getItem('token');
+    if(!token) return;
+    const res=await fetch('/api/groups', {headers:{'Authorization': 'Bearer '+token}});
+    const data=await res.json();
+    if(data.success){
+        const groupDiv=document.getElementById('usr-grps');
+        groupDiv.innerHTML='<h4>Groups:</h4>';
+        data.groups.forEach(group=>{
+            const groupBtn=document.createElement('button');
+            groupBtn.className='group-btn sbtn';
+            groupBtn.textContent=group.Gname;
+            groupBtn.addEventListener('click',()=>{
+                window.location.href=`/chat.html?gid=${group.Gid}`;
+            });
+            groupDiv.appendChild(groupBtn);
+        });
+    }
+}
+document.addEventListener('DOMContentLoaded', async ()=>{
+    await checkauth();
+    await loadusrgrps();
+});

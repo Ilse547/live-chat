@@ -121,6 +121,16 @@ app.post('/api/create-chat',verifyToken,async (req,res)=>{
         res.json({success:true,group});
     }catch(err){console.error('error creating chat: ',err);res.status(500).json({succhess:false,message:"error with server"});}
 });
+app.get('/api/groups',verifyToken,async(req,res)=>{
+    try{
+        const groups=await Group.find({Gparticipants:req.user.uname});
+        res.json({success:true,groups});
+    }catch(err){
+        console.error('error gettzmg groups: ',err);
+        res.status(500).json({success:false,message:"server problem"});
+    }
+});
+
 server.listen(port, ()=>{
     console.log(`http://localhost:${port}`);
     console.log('gun relay peer run prt', port);

@@ -13,14 +13,13 @@
                 <h3>USER:</h3>
             <div id="current-user" class="current-user hidden">
                 <span id="current-username">Loading...</span>
-                <button id="logout-btn" class="sbtn">Logout</button>  
+                <button id="logout-btn" class="sbtn">Logout</button>
             </div>
             </div>
             <button id="create-chat" class="sbtn" >Create Chat</button>
             <hr class="nav-divider">
-
-            <div id="usr-grps" class="group-li"></div>
-                        <button id="mbtn" class="main-btn sbtn">Main chat</button>
+            <button id="mbtn" class="main-btn sbtn">Main chat</button>
+            <div id="usr-grps" class="group-li"></div>                        
             <div class="adminonly hidden">
                 <hr class="nav-divider">
                 <h3>admin crtls</h3>
@@ -30,7 +29,7 @@
                 <div class="chat-container">
             <main class="chat">
                 <div class="header">
-                    <h1>CHAT</h1>
+                    <h1 id="hgroup-name">Group:</h1>
                     <button class="sb-btn sbtn" id="sb-btn">sidebar</button>
                     <div id="messages"></div>
                 </div>

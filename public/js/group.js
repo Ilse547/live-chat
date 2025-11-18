@@ -152,13 +152,16 @@ async function loadusrgrps(){
     }
 }
 
-const mbtn=getElementById('mbtn');
+const mbtn=document.getElementById('mbtn');
 mbtn.addEventListener('click',()=>{
     window.location.href="/";
 });
 document.addEventListener('DOMContentLoaded', async ()=>{
     await checkauth();
     await loadusrgrps();
+    const params=new URLSearchParams(window.location.search);
+    const grpname=params.get('gname');
+    document.getElementById('hgroup-name').textContent=`Group: ${grpname}`;
 });
 
 //document.body.insertAdjacentHTML('beforeend',`<p>Group id: ${gid}</p>`);

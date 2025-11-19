@@ -92,13 +92,31 @@ body {
     overflow:hidden;}
 .sidebar.collapsed >*{opacity:0;pointer-events:none;transition:opacity 0.2s;}
 .sbtn{max-width: auto;margin-bottom: 20px;}
+.sb-btn{display: none;}
+@media screen and (min-width:663px) {
+    .sidebar{
+        width:150px;
+        padding:0.5rem;
+    }
+    .chat{padding:0.75rem;}
+    .inputbar{
+        padding:0.75rem;
+        gap:0.5rem;
+    }
+    #message-input, #send-btn{font-size:1rem;}
+}
+@media screen and (max-width:662px){
 
-@media screen and (max-width:662px) {
-    .sidebar-toggle{display:block;}
-    .sidebar{position:absolute;
-    top:0;
-    left:0;
-    height:100vh;
-    z-index:1000;}
-    .chat-container{margin-left:0 !important;}
+    .sb-btn{display:block;}
+    .sidebar{
+        position:absolute;
+        top:0;
+        left:0;
+        height:100vh;
+        z-index:1000;
+    }
+    .chat-container{margin-left:0 !important; width:100vw;}
+    .chat{padding:0.5rem;}
+    .inputbar{padding:0.5rem;gap:0.25rem}
+    body{font-size: 120%;}
 }

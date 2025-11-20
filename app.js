@@ -10,6 +10,7 @@ const { requireauth } = require('./middleware/authentication');
 const bcrypt = require('bcrypt');
 const user = require('./models/user.js');
 const Group = require('./models/group.js');
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URL)
@@ -24,13 +25,12 @@ mongoose.connect(process.env.MONGODB_URL)
 const app = express();
 const port = process.env.PORT;
 const JWT_KEY = process.env.JWT_KEY;
+
 app.use(logger);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-
 const server = require('http').createServer(app);
-
 
 const gun = GUN({
     web: server,
@@ -40,8 +40,6 @@ const gun = GUN({
         'https://gun-us.herokuapp.com/gun'
     ]
 });
-
-
 
 app.use(express.json());
 app.post('/register',async (req, res)=>{
@@ -85,7 +83,7 @@ app.post('/login',async (req, res)=>{
 
         const token=JWT.sign({id:user._id,uname:user.username},JWT_KEY,{expiresIn:'24h'});
         res.json({token});
-    });
+});
 
 const verifyToken = (req, res,next)=>{
     const bearerHeader = req.headers['authorization'];
@@ -95,10 +93,11 @@ const verifyToken = (req, res,next)=>{
             if(err){return res.status(403).json({message:'invalid token'});
         } else{req.user = decoded;
                 next();
-            }});}else{res.status(403).json ({message:"token not provided"});}}
+            }});}else{res.status(403).json ({message:"token not provided"});
+}}
 
-app.get('/', requireauth, (req,res)=>{
-    res.sendFile(path.join(__dirname,'public','index.html'));});
+app.get('/', requireauth, (req,res)=>{res.sendFile(path.join(__dirname,'public','index.html'));});
+
 app.get('/api/me',verifyToken,async (req, res) => {
         try{
             const user = await User.findById(req.user.id)
@@ -114,6 +113,8 @@ app.get('/api/me',verifyToken,async (req, res) => {
         res.json({authenticated:false});
     }
 });
+
+
 app.post('/api/create-chat',verifyToken,async (req,res)=>{
     try{
         const {unames}=req.body;
@@ -124,6 +125,8 @@ app.post('/api/create-chat',verifyToken,async (req,res)=>{
         res.json({success:true,group});
     }catch(err){console.error('error creating chat: ',err);res.status(500).json({succhess:false,message:"error with server"});}
 });
+
+
 app.get('/api/groups',verifyToken,async(req,res)=>{
     try{
         const groups=await Group.find({Gparticipants:req.user.uname});
@@ -138,4 +141,3 @@ server.listen(port, ()=>{
     console.log(`http://localhost:${port}`);
     console.log('gun relay peer run prt', port);
 });
-module.exports=app;

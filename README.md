@@ -51,3 +51,7 @@ For the messages: GUN
 
 ## Run the code:
 You can run the code with: ```node app.js```
+
+## Testing:
+There are currently 3 files for testin using the Jest library  
+you can test running: ```npm test```

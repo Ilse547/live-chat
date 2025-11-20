@@ -18,12 +18,12 @@
 
                 <div id="current-user" class="current-user hidden">
                     <span id="current-username">Loading...</span>
-                    <button id="logout-btn" class="sbtn">Logout</button>  
+                    <button aria-label="Logout Button"  id="logout-btn" class="sbtn">Logout</button>  
                 </div>
 
             </div>
 
-            <button id="create-chat" class="sbtn" >Create Chat</button>
+            <button aria-label="Create group button" id="create-chat" class="sbtn" >Create Chat</button>
 
             <hr class="nav-divider">
             <div id="usr-grps" class="group-li"></div>
@@ -31,7 +31,7 @@
             <div class="adminonly hidden">
                 <hr class="nav-divider">
                 <h3>admin crtls</h3>
-                <button id="dlt-msg" class="sbtn" >delete all msg</button>
+                <button aria-label="Delete all messages" id="dlt-msg" class="sbtn" >delete all msg</button>
             </div>
         </nav>
         
@@ -41,7 +41,7 @@
 
                 <div class="header">
                     <h1>General chat</h1>
-                    <button class="sb-btn sbtn" id="sb-btn">sidebar</button>
+                    <button aria-label="Collapse Sidebar button" class="sb-btn sbtn" id="sb-btn">sidebar</button>
                     <div id="messages"></div>
                 </div>
 
@@ -49,8 +49,8 @@
 
             <div class="inputbar">
 
-                <input type="text" id="message-input" placeholder="Type a message...">
-                <button id="send-btn">Send</button> 
+                <input aria-label="Message input" type="text" id="message-input" placeholder="Type a message...">
+                <button aria-label="Send message button" id="send-btn">Send</button> 
 
             </div>
 

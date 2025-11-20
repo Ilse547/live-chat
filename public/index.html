@@ -8,28 +8,38 @@
         <link rel="stylesheet" href="./style/style.css">
         <link rel="icon" href="img/whatb.png" alt="Icon"type="image/x-icon">
     </head>
+
     <body>
+
         <nav class="sidebar">
+
             <div class="username-section">
                 <h3>USER:</h3>
-            <div id="current-user" class="current-user hidden">
-                <span id="current-username">Loading...</span>
-                <button id="logout-btn" class="sbtn">Logout</button>  
+
+                <div id="current-user" class="current-user hidden">
+                    <span id="current-username">Loading...</span>
+                    <button id="logout-btn" class="sbtn">Logout</button>  
+                </div>
+
             </div>
-            </div>
+
             <button id="create-chat" class="sbtn" >Create Chat</button>
+
             <hr class="nav-divider">
             <div id="usr-grps" class="group-li"></div>
+
             <div class="adminonly hidden">
                 <hr class="nav-divider">
                 <h3>admin crtls</h3>
                 <button id="dlt-msg" class="sbtn" >delete all msg</button>
             </div>
+            
         </nav>
-
         
         <div class="chat-container">
+
             <main class="chat">
+
                 <div class="header">
                     <h1>General chat</h1>
                     <button class="sb-btn sbtn" id="sb-btn">sidebar</button>
@@ -37,13 +47,17 @@
                 </div>
 
             </main>
-            
+
             <div class="inputbar">
+
                 <input type="text" id="message-input" placeholder="Type a message...">
                 <button id="send-btn">Send</button> 
+
             </div>
+
         </div>
 
         <script src="./js/chat.js"></script>
+
     </body>
 </html>

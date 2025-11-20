@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <title>Login</title>
         <link rel="icon" href="img/whatb.png" type="image/x-icon">
         <link rel="stylesheet" href="./style/style-nchat.css">
 
     </head>
+
     <body>
+
         <form action="/register" method="POST">
             <label for="uname"></label>
             <input type="text" id="uname" name="uname" placeholder="username"> </br>
 
             <label for="pword"></label>
             <input type="password" id="pword" name="pword" placeholder="password"> </br>
+
             <button type="submit">register</button>
             <button type="button" id="logisredirect">Login page</button>
         </form>
 
         <script>
+
             const logredirect = document.getElementById('logisredirect');
             logredirect.addEventListener('click', await =>{window.location.href='/login.html'});
+            
         </script>
     </body>
 </html>

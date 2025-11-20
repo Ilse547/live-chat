@@ -5,24 +5,31 @@
         <link rel="icon" href="img/whatb.png" type="image/x-icon">
         <link rel="stylesheet" href="./style/style-nchat.css">
     </head>
+
     <body>
+
         <form id="login-form">
+
             <div class form-r>
                 <label for="uname"></label>
                 <input type="text" id="uname" name="uname" placeholder="Username..."> </br>
             </div>
+
             <div class form-r>
                 <label for="pword"></label>
                 <input type="password" id="pword" name="pword" placeholder="Password..."> </br>
             </div>
+
             <button type="submit">Login</button>
             <button type="button" id="regisredirect">Register page</button>
 
         </form>
+
         <script>
             const regredirect = document.getElementById('regisredirect');
             regredirect.addEventListener('click', await =>{window.location.href='/register.html'});
         </script>
+        
         <script src="js/login.js"></script>
     </body>
 </html>

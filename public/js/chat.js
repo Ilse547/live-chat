@@ -3,6 +3,8 @@ const gun = GUN([
     'https://gun-manhattan.herokuapp.com/gun',
     'https://gun-us.herokuapp.com/gun']);
 const chat = gun.get('general-chat');
+
+
 let username = null;
 
 const currentUserDiv = document.getElementById('current-user');

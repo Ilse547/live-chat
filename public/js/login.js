@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     e.preventDefault();
     const uname=document.getElementById('uname').value;
     const pword=document.getElementById('pword').value;
+    if(!validateUsername(uname)){
+      alert('username must be between 3 and 20 character slogn');
+      return;
+    }
+    if(!validatePassword(pword)){
+      alert('pword must eb at elast 6 characters long');
+      return;
+    }
     await login(uname, pword);});});
 async function login(uname, pword) {
   const response=await fetch('/login',{

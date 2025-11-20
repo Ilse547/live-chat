@@ -10,7 +10,6 @@ const { requireauth } = require('./middleware/authentication');
 const bcrypt = require('bcrypt');
 const user = require('./models/user.js');
 const Group = require('./models/group.js');
-
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URL)
@@ -82,7 +81,11 @@ app.post('/login',async (req, res)=>{
         res.json({token, username: user.username, id: user._id, admin:user.admin||false});
     }catch(err){
         console.error('login err:', err);
-        res.status(500).json({message:'err during login'});}});
+        res.status(500).json({message:'err during login'});}
+
+        const token=JWT.sign({id:user._id,uname:user.username},JWT_KEY,{expiresIn:'24h'});
+        res.json({token});
+    });
 
 const verifyToken = (req, res,next)=>{
     const bearerHeader = req.headers['authorization'];
@@ -135,3 +138,4 @@ server.listen(port, ()=>{
     console.log(`http://localhost:${port}`);
     console.log('gun relay peer run prt', port);
 });
+module.exports=app;

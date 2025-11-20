@@ -4,7 +4,6 @@ const gun = GUN([
     'https://gun-us.herokuapp.com/gun']);
 const chat = gun.get('general-chat');
 
-
 let username = null;
 
 const currentUserDiv = document.getElementById('current-user');
@@ -12,16 +11,18 @@ const currentUsernameSpan = document.getElementById('current-username');
 const logoutbtn = document.getElementById('logout-btn');
 const cchat = document.getElementById('create-chat');
 
-
 document.getElementById("sb-btn").addEventListener('click', function() {
     document.querySelector('.sidebar').classList.toggle('collapsed');
 });
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
     checkauth();
     const delmsg=document.getElementById('dlt-msg');
     delmsg.addEventListener('click', delallmsg);
 });
+
+//DELETE ALL MESSAGES FUNCTION
 async function delallmsg(){
     try{
         const token=localStorage.getItem('token');
@@ -45,7 +46,9 @@ async function delallmsg(){
         console.log("messages deleted");
 
     }catch(err){console.error('errirr del messages:', err); alert("error del emssages");}
-}
+};
+
+//LOGOUT
 logoutbtn.addEventListener("click",()=>{
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -53,6 +56,8 @@ logoutbtn.addEventListener("click",()=>{
     localStorage.removeItem('userId');
     window.location.href="/login.html";
 });
+
+//CHACKING AUTHENTICATION
 async function checkauth() {
     console.log("running checkauth");
     try{
@@ -84,12 +89,15 @@ async function checkauth() {
         return data;
     }catch(err){console.error('auth check failed:',err);window.location.href='/login.html';return null;}
 };
+
+//ADMIN CONTROLLS
 function showAdminElement(){
     const adminElement = document.querySelectorAll('.adminonly');
     adminElement.forEach(Element=>{
         Element.classList.remove('hidden');
     });
 }
+
 
 function hideAdminElement(){
     const adminElement = document.querySelectorAll('.adminonly');
@@ -98,6 +106,7 @@ function hideAdminElement(){
     });
 }
 
+//MESSAGES LOGIC
 document.getElementById('send-btn').addEventListener("click",()=>{
     const input=document.getElementById('message-input');
     if(input.value.trim()&&username){
@@ -109,13 +118,21 @@ document.getElementById('send-btn').addEventListener("click",()=>{
         };
         chat.get('messages').get(message.id).put(message);
         input.value = "";
-    }else if(!username){alert('wait until username load');}});
+    }else if(!username){alert('wait until username load');}
+});
+
 
 document.getElementById('message-input').addEventListener('keypress', (e)=>{
-    if(e.key==="Enter"){document.getElementById('send-btn').click();}});
+    if(e.key==="Enter"){document.getElementById('send-btn').click();}
+});
+
+
 chat.get('messages').map().on((message,key)=>{
     if(message&&message.text&&message.user&&message.id){
-        if(!document.getElementById(message.id)){displayMessage(message);}}})
+        if(!document.getElementById(message.id)){displayMessage(message);}}
+});
+
+
 function displayMessage(message){
     const messageDiv=document.getElementById('messages');
     const messagesEl=document.createElement('div');
@@ -128,10 +145,14 @@ function displayMessage(message){
     messageDiv.scrollTop=messageDiv.scrollHeight;
 }
 
+//CREATE CHAT BUTTON
 cchat.addEventListener('click', async()=>{
     try {
         window.location.href='/create.html';
-    }catch(err){console.error(err); resizeBy.status(404).json({message:"eroror"});}})
+    }catch(err){console.error(err); resizeBy.status(404).json({message:"eroror"});}
+});
+
+//GROUP LOADING NAVIGATION
 async function loadusrgrps(){
     const token=localStorage.getItem('token');
     if(!token) return;
@@ -151,6 +172,8 @@ async function loadusrgrps(){
         });
     }
 }
+
+
 document.addEventListener('DOMContentLoaded', async ()=>{
     await checkauth();
     await loadusrgrps();

@@ -29,11 +29,11 @@ After loging in the user should be able to logout and destroy the cookie
 ### Admin Credentials:
 Username: ```admin```  
 Password: ```123456```
-
+Security question answer: ``` Berlin ```
 ### User Credentials:
 Username: ```user```  
 Password: ```123456```
-
+Security question answer: ``` Berlin ```
 ## toolkit:
 ### Backend:
 -Express

@@ -46,7 +46,7 @@ app.post('/register',async (req, res)=>{
     try {
         const {uname, pword,secA,secQ}=req.body;
         const existuser = await User.findOne({username:uname});
-        if(existuser){return res.status(400).json({message:'user already exists'});}
+        if(existuser){return res.status(400).json({message:'This Username is already in use'});}
 
         const secAhashed=await bcrypt.hash(secA,12);
         const newUser = new User({
@@ -58,7 +58,7 @@ app.post('/register',async (req, res)=>{
         await newUser.save();
         console.log("user created")
         res.redirect('/login.html');
-    }catch(err){console.error('problem while reg:', err); res.status(401).json({message:"could not create user"});}
+    }catch(err){console.error('problem while reg:', err); res.status(401).json({message:"Could not create user"});}
 })
    
 app.post('/login',async (req, res)=>{
@@ -67,21 +67,20 @@ app.post('/login',async (req, res)=>{
         const user = await User.findOne({username: uname});
 
         if(!user) {
-            return res.status(401).json({message:'wrong creds'});
+            return res.status(401).json({message:'There is no user with that username'});
         }
 
         const isValPword = await user.comparePassword(pword);
-        if(!isValPword){return res.status(401).json({message:'wrong creds'});}
+        if(!isValPword){return res.status(401).json({message:'The password is wrong'});}
         const payload={
             id:user._id,
             uname: user.username,
             admin: user.admim||false
         };
-        const token = jwt.sign(payload, JWT_KEY, {expiresIn: '12h'});
         res.json({token, username: user.username, id: user._id, admin:user.admin||false});
     }catch(err){
         console.error('login err:', err);
-        res.status(500).json({message:'err during login'});}
+        res.status(500).json({message:'There was an error in the login process'});}
 
         const token=JWT.sign({id:user._id,uname:user.username},JWT_KEY,{expiresIn:'24h'});
         res.json({token});
@@ -92,10 +91,10 @@ const verifyToken = (req, res,next)=>{
     if(typeof bearerHeader !== 'undefined'){
         const token = bearerHeader.split(' ')[1];
         jwt.verify(token, JWT_KEY, (err, decoded)=>{
-            if(err){return res.status(403).json({message:'invalid token'});
+            if(err){return res.status(403).json({message:'Invalid token'});
         } else{req.user = decoded;
                 next();
-            }});}else{res.status(403).json ({message:"token not provided"});
+            }});}else{res.status(403).json ({message:"No token was provided"});
 }}
 
 app.get('/', requireauth, (req,res)=>{res.sendFile(path.join(__dirname,'public','index.html'));});
@@ -119,16 +118,16 @@ app.get('/api/me',verifyToken,async (req, res) => {
 app.post('/forgot-pword', async(req,res)=>{
     const {username}=req.body;
     const user=await User.findOne({username});
-    if(!user) return res.status(404).json({message:"could not found the user"});
+    if(!user) return res.status(404).json({message:"Not able to find a user with that username"});
     res.json({securityQuestion:user.secQ});
 });
 
 app.post('/reset-pword', async(req,res)=>{
     const {username,sA,newPword}=req.body;
     const user=await User.findOne({username});
-    if(!user) return res.status(404).json({message:"usr nor found"});
+    if(!user) return res.status(404).json({message:"Not able to find a user with that username"});
     const iscorr=await bcrypt.compare(sA,user.secAhashed);
-    if(!iscorr) return res.status(404).json({message: 'wrong answer'});
+    if(!iscorr) return res.status(404).json({message: 'Wrong answer'});
     user.password= newPword;
     await user.save();
     res.json({message:'password good'})
@@ -143,7 +142,7 @@ app.post('/api/create-chat',verifyToken,async (req,res)=>{
         const group=new Group({Gname,Gid,Gparticipants:unames});
         await group.save();
         res.json({success:true,group});
-    }catch(err){console.error('error creating chat: ',err);res.status(500).json({succhess:false,message:"error with server"});}
+    }catch(err){console.error('error creating chat: ',err);res.status(500).json({succhess:false,message:"There was an error creating the group"});}
 });
 
 app.get('/api/groups',verifyToken,async(req,res)=>{
@@ -151,12 +150,11 @@ app.get('/api/groups',verifyToken,async(req,res)=>{
         const groups=await Group.find({Gparticipants:req.user.uname});
         res.json({success:true,groups});
     }catch(err){
-        console.error('error gettzmg groups: ',err);
+        console.error('error getting groups: ',err);
         res.status(500).json({success:false,message:"server problem"});
     }
 });
 
 server.listen(port, ()=>{
-    console.log(`http://localhost:${port}`);
     console.log('gun relay peer run prt', port);
 });

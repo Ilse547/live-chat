@@ -7,21 +7,21 @@
     <body>
         <form id="forgot-form">
             <div class="form-r">
-                <input type="text" id="uname" placeholder="your username..." required>
+                <input aria-label="Username input fied" type="text" id="uname" placeholder="your username..." required>
             </div>
-            <button type="button" id="getq">get security question</button>
+            <button aria-label="Get security question button" type="button" id="getq">get security question</button>
 
             <div id="sec-qes">
                 <div class="form-r">
                     <label id="securityQ"></label>
                 </div>
                 <div class="form-r">
-                    <input type="text" id="secAns" placeholder="your answer">
+                    <input aria-label="Security question input field" type="text" id="secAns" placeholder="your answer">
                 </div>
                 <div class="form-r">
-                    <input type="password" id="newPword" name="newPword" placeholder="new password" required>
+                    <input aria-label="new password input field" type="password" id="newPword" name="newPword" placeholder="new password" required>
                 </div>
-                <button type="button" id="res-pword">Reset password</button>
+                <button aria-label="Reset password button" type="button" id="res-pword">Reset password</button>
             </div>
         </form>
         <script src="js/forgot.js"></script>

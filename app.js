@@ -77,13 +77,14 @@ app.post('/login',async (req, res)=>{
             uname: user.username,
             admin: user.admim||false
         };
+        const token=JWT.sign({id:user._id,uname:user.username},JWT_KEY,{expiresIn:'24h'});
+        res.json({token});
         res.json({token, username: user.username, id: user._id, admin:user.admin||false});
     }catch(err){
         console.error('login err:', err);
         res.status(500).json({message:'There was an error in the login process'});}
 
-        const token=JWT.sign({id:user._id,uname:user.username},JWT_KEY,{expiresIn:'24h'});
-        res.json({token});
+
 });
 
 const verifyToken = (req, res,next)=>{

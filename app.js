@@ -10,6 +10,8 @@ const { requireauth } = require('./middleware/authentication');
 const bcrypt = require('bcrypt');
 const user = require('./models/user.js');
 const Group = require('./models/group.js');
+const { use } = require('react');
+const { isContext } = require('vm');
 
 dotenv.config();
 
@@ -44,14 +46,16 @@ const gun = GUN({
 app.use(express.json());
 app.post('/register',async (req, res)=>{
     try {
-        const {uname, pword}=req.body;
+        const {uname, pword,secA,secQ}=req.body;
         const existuser = await User.findOne({username:uname});
         if(existuser){return res.status(400).json({message:'user already exists'});}
 
-
+        const secAhashed=await bcrypt.hash(secA,12);
         const newUser = new User({
             username: uname,
-            password: pword
+            password: pword,
+            secQ,
+            secAhashed
         });
         await newUser.save();
         console.log("user created")
@@ -136,6 +140,24 @@ app.get('/api/groups',verifyToken,async(req,res)=>{
         res.status(500).json({success:false,message:"server problem"});
     }
 });
+
+app.post('/forgot-pword', async(req,res)=>{
+    const {username}=req.body;
+    const user=await User.findOne({username});
+    if(!user) return res.status(404).json({message:"could not found the user"});
+    res.json({securityQuestion:user.securityQuestion});
+});
+
+app.post('reset-pword', async(req,res)=>{
+    const {username,securityAnswer,newPword}=req.body;
+    const user=await User.findOne({username});
+    if(!user) return res.status(404).json({message:"usr nor found"});
+    const iscorr=await bcrypt.compare(securityAnswer,user.securityAnswerHash);
+    if(!iscorr) return res.status(404).json({message: 'wrong answer'});
+    user.password=await bcrypt.hash(newPword,12);
+    await user.save();
+    res.json({message:'password good'})
+})
 
 server.listen(port, ()=>{
     console.log(`http://localhost:${port}`);

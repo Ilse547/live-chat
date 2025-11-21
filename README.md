@@ -56,3 +56,13 @@ You can run the code with: ```node app.js```
 ## Testing:
 There are currently 3 files for testin using the Jest library  
 you can test running: ```npm test```
+
+## Authentication:
+Users need a unique username, password and answer a security question to be able to reset the password.  
+The answer to the security question and password are hashed using the bcrypt library.  
+If a user wants to be admin it need to be changed in the database directly.  
+
+## Group chat:
+The group chats metdata is stored in the database (participants, name, id).  
+The group chats cannot be deleted or modified yet.  
+When creating a group chat the user needs to put his own username.

@@ -32,8 +32,8 @@ async function delallmsg(){
             }
         });
         const data = await response.json();
-        if(!data.admin){alert('access denied you are not and admin :(');return;}
-        const condel = confirm('this will delete all msgs, are you sure ?');
+        if(!data.admin){alert('Access denied, you are not an admin!');return;}
+        const condel = confirm('This will delete all messages. Are you sure ?');
         if(!condel) return;
         console.log('admin del msg');
         chat.get('messages').map().on((message, key)=>{
@@ -42,10 +42,10 @@ async function delallmsg(){
         chat.get('messages').put(null);
         const messagesDiv = document.getElementById('messages');
         messagesDiv.innerHTML='';
-        alert('messages were deleted');
+        alert('All messages were deletes');
         console.log("messages deleted");
 
-    }catch(err){console.error('errirr del messages:', err); alert("error del emssages");}
+    }catch(err){console.error('errirr del messages:', err); alert("There was an error while deleting the messages");}
 };
 
 //LOGOUT
@@ -118,7 +118,7 @@ document.getElementById('send-btn').addEventListener("click",()=>{
         };
         chat.get('messages').get(message.id).put(message);
         input.value = "";
-    }else if(!username){alert('wait until username load');}
+    }else if(!username){alert('Please wait until your username loads');}
 });
 
 
@@ -149,7 +149,7 @@ function displayMessage(message){
 cchat.addEventListener('click', async()=>{
     try {
         window.location.href='/create.html';
-    }catch(err){console.error(err); resizeBy.status(404).json({message:"eroror"});}
+    }catch(err){console.error(err); resizeBy.status(404).json({message:"There was an error"});}
 });
 
 //GROUP LOADING NAVIGATION

@@ -13,5 +13,5 @@ document.getElementById('create-chatf').addEventListener('submit', async (e)=>{
     const data=await res.json();
     if(data.success){
         window.location.href=`/chat.html?gid=${data.group.Gid}`;
-    }else{alert('failed to create chart');}
+    }else{alert('Failed to create chat group');}
 });

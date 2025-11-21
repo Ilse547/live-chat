@@ -5,8 +5,8 @@ const verifyToken = (req, res,next)=>{
     if(typeof bearerHeader !== 'undefined'){
         const token = bearerHeader.split(' ')[1];
         jwt.verify(token, JWT_KEY, (err, decoded)=>{
-            if(err){return res.status(403).json({message:'invalid token'});
+            if(err){return res.status(403).json({message:'The token is invalid'});
         } else{req.user = decoded;
                 next();
-            }});}else{res.status(403).json ({message:"token not provided"});}}
+            }});}else{res.status(403).json ({message:"There was no token provided"});}}
 module.exports=verifyToken

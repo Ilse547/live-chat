@@ -118,6 +118,24 @@ app.get('/api/me',verifyToken,async (req, res) => {
     }
 });
 
+app.post('/forgot-pword', async(req,res)=>{
+    const {username}=req.body;
+    const user=await User.findOne({username});
+    if(!user) return res.status(404).json({message:"could not found the user"});
+    res.json({securityQuestion:user.secQ});
+});
+
+app.post('/reset-pword', async(req,res)=>{
+    const {username,sA,newPword}=req.body;
+    const user=await User.findOne({username});
+    if(!user) return res.status(404).json({message:"usr nor found"});
+    const iscorr=await bcrypt.compare(sA,user.secAhashed);
+    if(!iscorr) return res.status(404).json({message: 'wrong answer'});
+    user.password= newPword;
+    await user.save();
+    res.json({message:'password good'})
+})
+
 
 app.post('/api/create-chat',verifyToken,async (req,res)=>{
     try{
@@ -130,7 +148,6 @@ app.post('/api/create-chat',verifyToken,async (req,res)=>{
     }catch(err){console.error('error creating chat: ',err);res.status(500).json({succhess:false,message:"error with server"});}
 });
 
-
 app.get('/api/groups',verifyToken,async(req,res)=>{
     try{
         const groups=await Group.find({Gparticipants:req.user.uname});
@@ -140,24 +157,6 @@ app.get('/api/groups',verifyToken,async(req,res)=>{
         res.status(500).json({success:false,message:"server problem"});
     }
 });
-
-app.post('/forgot-pword', async(req,res)=>{
-    const {username}=req.body;
-    const user=await User.findOne({username});
-    if(!user) return res.status(404).json({message:"could not found the user"});
-    res.json({securityQuestion:user.securityQuestion});
-});
-
-app.post('reset-pword', async(req,res)=>{
-    const {username,securityAnswer,newPword}=req.body;
-    const user=await User.findOne({username});
-    if(!user) return res.status(404).json({message:"usr nor found"});
-    const iscorr=await bcrypt.compare(securityAnswer,user.securityAnswerHash);
-    if(!iscorr) return res.status(404).json({message: 'wrong answer'});
-    user.password=await bcrypt.hash(newPword,12);
-    await user.save();
-    res.json({message:'password good'})
-})
 
 server.listen(port, ()=>{
     console.log(`http://localhost:${port}`);
